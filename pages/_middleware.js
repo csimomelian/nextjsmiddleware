@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const PUBLIC_FILE = /\.(.*)$/;
+const PUBLIC_FILE = /\.([a-zA-Z0-9]+$)/;
 
 export function middleware(request) {
   const shouldHandleLocale =
@@ -9,6 +9,6 @@ export function middleware(request) {
     request.nextUrl.locale === 'default';
 
   return shouldHandleLocale
-    ? NextResponse.redirect(`/es${request.nextUrl.href}`)
+    ? NextResponse.redirect(`/es${request.nextUrl.pathname}`)
     : undefined;
 }
