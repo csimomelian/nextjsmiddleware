@@ -1,16 +1,41 @@
 import Head from 'next/head'
+import useTranslation from 'next-translate/useTranslation';
+import { useRouter } from 'next/router';
+import { useMemo } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
+  const { t } = useTranslation();
+  let router = useRouter();
+
+  const mapLocales = useMemo(
+    () =>
+      router.locales?.reduce(
+        (acc, el) => ({
+          ...acc,
+          [el]: el,
+        }),
+        {},
+      ),
+    [router.locales],
+  );
+  delete mapLocales?.default;
+
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>Create Next App middleware</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <Link href={router.asPath} locale={mapLocales?.es}>
+        <a>Español</a>
+      </Link>
+      <Link href={router.asPath} locale={mapLocales?.en}>
+        <a>Ingles</a>
+      </Link>
       <main>
         <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          {t('common:toast')}
         </h1>
 
         <p className="description">
