@@ -9,6 +9,6 @@ export function middleware(request) {
     request.nextUrl.locale === 'default';
 
   return shouldHandleLocale
-    ? NextResponse.redirect(`/es${request.nextUrl.pathname}`)
+    ? NextResponse.redirect(`/es${request.nextUrl.href}`)
     : undefined;
 }
